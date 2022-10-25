@@ -177,7 +177,7 @@ namespace Microsoft.DotNet.Interactive.Jupyter.Tests
 
             var metaData = new Dictionary<string, object>
             {
-                { "dotnet_interactive", new InputCellMetadata("fsharp") }
+                { "dotnet_interactive", new InputCellMetadata(kernelName: "fsharp", language: "fsharp") }
             };
 
             var replyMessage = new Message(header, content: executeResult, metaData: metaData);

@@ -183,7 +183,7 @@ namespace Microsoft.DotNet.Interactive.Tests.Connection
 
                 yield return new RequestSignatureHelp("sig-help-contents", new LinePosition(1, 2));
 
-                yield return new SendEditableCode("language", "code");
+                yield return new SendEditableCode("someKernelName", "code");
 
                 yield return new SubmitCode("123", "csharp", SubmissionType.Run);
 

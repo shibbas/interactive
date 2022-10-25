@@ -233,9 +233,10 @@ describe("dotnet-interactive", () => {
                 event: eventIn
             };
 
-            expect(transport!.eventsPublished.length).to.be.equal(1);
-            expect(transport!.eventsPublished[0].eventType).to.be.equal(eventEnvelopeIn.eventType);
-            let eventPublished = <contracts.CodeSubmissionReceived>transport!.eventsPublished[0].event;
+            const publishedEvents = transport!.eventsPublished.filter(e => e.eventType === eventEnvelopeIn.eventType);
+            expect(publishedEvents.length).to.equal(1);
+            expect(publishedEvents[0].eventType).to.be.equal(eventEnvelopeIn.eventType);
+            const eventPublished = <contracts.CodeSubmissionReceived>publishedEvents[0].event;
             expect(eventPublished.code).to.be.equal(eventIn.code);
         });
 

@@ -17,6 +17,7 @@ namespace Microsoft.DotNet.Interactive
             string localName,
             string? languageName = null,
             string? languageVersion = null,
+            string? displayName = null,
             string[]? aliases = null)
         {
             if (string.IsNullOrWhiteSpace(localName))
@@ -32,12 +33,22 @@ namespace Microsoft.DotNet.Interactive
             LocalName = localName;
             LanguageName = languageName;
             LanguageVersion = languageVersion;
+            DisplayName = displayName ?? CreateDisplayName();
             NameAndAliases = new HashSet<string> { LocalName };
 
             if (aliases is not null)
             {
                 NameAndAliases.UnionWith(aliases);
             }
+        }
+
+        private string CreateDisplayName()
+        {
+            var suffix = LanguageVersion is null
+                ? string.Empty
+                : $" ({LanguageVersion})";
+            var displayName = LanguageName + suffix;
+            return displayName;
         }
 
         public string[] Aliases
@@ -49,6 +60,8 @@ namespace Microsoft.DotNet.Interactive
         public string? LanguageName { get; internal set; }
 
         public string? LanguageVersion { get; internal set; }
+
+        public string DisplayName { get; internal set; }
 
         public string LocalName { get; }
 

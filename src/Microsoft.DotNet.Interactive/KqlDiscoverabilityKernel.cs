@@ -18,7 +18,7 @@ namespace Microsoft.DotNet.Interactive
         private readonly HashSet<string> _kernelNameFilter;
         private const string DefaultKernelName = "kql";
 
-        public KqlDiscoverabilityKernel() : base(DefaultKernelName, languageName: "KQL")
+        public KqlDiscoverabilityKernel() : base(DefaultKernelName, languageName: "KQL", displayName: "Kusto Query Language")
         {
             _kernelNameFilter = new HashSet<string>
             {

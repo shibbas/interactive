@@ -105,7 +105,7 @@ public sealed class ProxyKernel : Kernel
         {
             if (!task.GetIsCompletedSuccessfully())
             {
-                if (task.Exception is {} ex)
+                if (task.Exception is { } ex)
                 {
                     completionSource.TrySetException(ex);
                 }
@@ -115,7 +115,7 @@ public sealed class ProxyKernel : Kernel
         return completionSource.Task.ContinueWith(te =>
         {
             command.TargetKernelName = targetKernelName;
-          
+
             if (te.Result is CommandFailed cf)
             {
                 context.Fail(command, cf.Exception, cf.Message);

@@ -27,7 +27,7 @@ namespace Microsoft.DotNet.Interactive
         private ChooseKeyValueStoreKernelDirective _chooseKernelDirective;
         private (bool hadValue, object previousValue, object newValue)? _lastOperation;
 
-        public KeyValueStoreKernel(string name = DefaultKernelName) : base(name)
+        public KeyValueStoreKernel(string name = DefaultKernelName) : base(name, displayName: "Value Storage")
         {
         }
 

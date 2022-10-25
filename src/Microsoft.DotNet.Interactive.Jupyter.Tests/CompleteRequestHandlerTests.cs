@@ -44,11 +44,11 @@ namespace Microsoft.DotNet.Interactive.Jupyter.Tests
         {
             var metaData = new Dictionary<string, object>
             {
-                { "dotnet_interactive", new InputCellMetadata("fsharp" ) }
+                { "dotnet_interactive", new InputCellMetadata(language: "fsharp") }
             };
             var request = ZeroMQMessage.Create(new CompleteRequest("1+1"), metaData: metaData);
             var context = new JupyterRequestContext(JupyterMessageSender, request);
-            var language = context.GetLanguage();
+            var language = context.GetKernelName();
             language
                 .Should()
                 .Be("fsharp");
@@ -59,7 +59,7 @@ namespace Microsoft.DotNet.Interactive.Jupyter.Tests
         {
             var request = ZeroMQMessage.Create(new CompleteRequest("1+1"));
             var context = new JupyterRequestContext(JupyterMessageSender, request);
-            var language = context.GetLanguage();
+            var language = context.GetKernelName();
             language
                 .Should()
                 .BeNull();

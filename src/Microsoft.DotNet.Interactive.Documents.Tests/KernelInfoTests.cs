@@ -11,7 +11,7 @@ public class KernelInfoTests
     [Fact]
     public void Aliases_do_not_include_name()
     {
-        new KernelInfo("one", new[] { "two", "three" })
+        new KernelInfo("one", null, new[] { "two", "three" })
             .Aliases
             .Should()
             .BeEquivalentTo("two", "three");

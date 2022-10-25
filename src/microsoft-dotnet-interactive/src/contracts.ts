@@ -128,7 +128,7 @@ export interface RequestValueInfos extends KernelCommand {
 }
 
 export interface SendEditableCode extends KernelCommand {
-    language: string;
+    kernelName: string;
     code: string;
 }
 
@@ -173,6 +173,12 @@ export interface ErrorElement extends InteractiveDocumentOutputElement {
     errorName: string;
     errorValue: string;
     stackTrace: Array<string>;
+}
+
+export interface DocumentKernelInfo {
+    name: string;
+    languageName?: string;
+    aliases: Array<string>;
 }
 
 export interface NotebookParseRequest extends NotebookParseOrSerializeRequest {
@@ -461,6 +467,7 @@ export interface KernelInfo {
     aliases: Array<string>;
     languageName?: string;
     languageVersion?: string;
+    displayName: string;
     localName: string;
     uri?: string;
     remoteUri?: string;
@@ -527,6 +534,11 @@ export interface ParameterInformation {
 export enum SubmissionType {
     Run = "run",
     Diagnose = "diagnose",
+}
+
+export interface DocumentKernelInfoCollection {
+    defaultKernelName: string;
+    items: DocumentKernelInfo[];
 }
 
 export interface KernelEventEnvelope {

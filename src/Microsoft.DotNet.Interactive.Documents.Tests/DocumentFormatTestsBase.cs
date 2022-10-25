@@ -11,9 +11,9 @@ public abstract class DocumentFormatTestsBase
     {
         DefaultKernelInfos = new KernelInfoCollection
         {
-            new("csharp", new[] { "cs", "C#", "c#" }),
-            new("fsharp", new[] { "fs", "F#", "f#" }),
-            new("pwsh", new[] { "powershell" }),
+            new("csharp", "csharp", new[] { "cs", "C#", "c#" }),
+            new("fsharp", "fsharp", new[] { "fs", "F#", "f#" }),
+            new("pwsh", "powershell", new[] { "powershell" }),
         };
         DefaultKernelInfos.DefaultKernelName = "csharp";
     }

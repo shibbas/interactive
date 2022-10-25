@@ -66,6 +66,7 @@ describe("frontEndHost", () => {
                     aliases: [],
                     languageName: undefined,
                     languageVersion: undefined,
+                    displayName: 'testKernel',
                     localName: 'testKernel',
                     supportedDirectives: [],
                     supportedKernelCommands: [{ name: 'RequestKernelInfo' }],
@@ -83,6 +84,7 @@ describe("frontEndHost", () => {
                     aliases: ['js'],
                     languageName: 'JavaScript',
                     languageVersion: undefined,
+                    displayName: 'javascript',
                     localName: 'javascript',
                     supportedDirectives: [],
                     supportedKernelCommands:
@@ -114,6 +116,7 @@ describe("frontEndHost", () => {
                     aliases: [],
                     languageName: 'SQL',
                     languageVersion: '10',
+                    displayName: 'SQL',
                     supportedDirectives: [],
                     supportedKernelCommands: [
                         {
@@ -141,6 +144,7 @@ describe("frontEndHost", () => {
             aliases: [],
             languageName: 'SQL',
             languageVersion: '10',
+            displayName: 'SQL',
             supportedDirectives: [],
             supportedKernelCommands: [
                 {
@@ -172,6 +176,7 @@ describe("frontEndHost", () => {
                     localName: 'sql',
                     uri: 'kernel://remote/sql',
                     aliases: [],
+                    displayName: 'SQL',
                     supportedDirectives: [],
                     supportedKernelCommands: [
                         {
@@ -190,6 +195,7 @@ describe("frontEndHost", () => {
                     aliases: [],
                     languageName: 'SQL',
                     languageVersion: '10',
+                    displayName: 'SQL',
                     supportedDirectives: [],
                     supportedKernelCommands: [
                         {
@@ -217,6 +223,7 @@ describe("frontEndHost", () => {
             aliases: [],
             languageName: 'SQL',
             languageVersion: '10',
+            displayName: 'SQL',
             supportedDirectives: [],
             supportedKernelCommands: [
                 {

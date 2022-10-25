@@ -17,7 +17,7 @@ namespace Microsoft.DotNet.Interactive.Jupyter.Tests
         {
             var rawMetadata = new
             {
-                dotnet_interactive = new InputCellMetadata("fsharp")
+                dotnet_interactive = new InputCellMetadata(language: "fsharp")
             };
             var rawMetadataJson = JsonSerializer.Serialize(rawMetadata);
             var metadata = MetadataExtensions.DeserializeMetadataFromJsonString(rawMetadataJson);
@@ -25,7 +25,7 @@ namespace Microsoft.DotNet.Interactive.Jupyter.Tests
                 .ContainKey("dotnet_interactive")
                 .WhoseValue
                 .Should()
-                .BeEquivalentToRespectingRuntimeTypes(new InputCellMetadata("fsharp"));
+                .BeEquivalentToRespectingRuntimeTypes(new InputCellMetadata(language: "fsharp"));
         }
 
         [Fact]
@@ -41,7 +41,7 @@ namespace Microsoft.DotNet.Interactive.Jupyter.Tests
                 .ContainKey("dotnet_interactive")
                 .WhoseValue
                 .Should()
-                .BeEquivalentToRespectingRuntimeTypes(new InputCellMetadata() );
+                .BeEquivalentToRespectingRuntimeTypes(new InputCellMetadata());
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace Microsoft.DotNet.Interactive.Jupyter.Tests
         {
             var rawMetadata = new
             {
-                dotnet_interactive_but_not_the_right_shape = new InputCellMetadata("fsharp")
+                dotnet_interactive_but_not_the_right_shape = new InputCellMetadata(language: "fsharp")
             };
             var rawMetadataJson = JsonSerializer.Serialize(rawMetadata);
             var metadata = MetadataExtensions.DeserializeMetadataFromJsonString(rawMetadataJson);

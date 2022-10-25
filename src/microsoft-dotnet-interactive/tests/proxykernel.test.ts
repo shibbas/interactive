@@ -165,7 +165,7 @@ describe("proxyKernel", () => {
 
         localToRemote.subscribe(e => {
             if (connection.isKernelCommandEnvelope(e)) {
-                remoteToLocal.next({ eventType: contracts.KernelInfoProducedType, event: <contracts.KernelInfoProduced>{ kernelInfo: { localName: "remoteKernel", aliases: [], languageName: "gsharp", languageVersion: "1.2.3", supportedKernelCommands: [{ name: "customCommand1" }, { name: "customCommand2" }], supportedDirectives: [] } }, command: { ...e, id: "newId" } });
+                remoteToLocal.next({ eventType: contracts.KernelInfoProducedType, event: <contracts.KernelInfoProduced>{ kernelInfo: { localName: "remoteKernel", aliases: [], languageName: "gsharp", languageVersion: "1.2.3", displayName: "G#", supportedKernelCommands: [{ name: "customCommand1" }, { name: "customCommand2" }], supportedDirectives: [] } }, command: { ...e, id: "newId" } });
 
                 remoteToLocal.next({ eventType: contracts.CommandSucceededType, event: <contracts.CommandSucceeded>{}, command: e });
             }
@@ -189,6 +189,7 @@ describe("proxyKernel", () => {
             aliases: [],
             languageName: 'gsharp',
             languageVersion: '1.2.3',
+            displayName: 'G#',
             localName: 'proxy',
             supportedDirectives: [],
             supportedKernelCommands:

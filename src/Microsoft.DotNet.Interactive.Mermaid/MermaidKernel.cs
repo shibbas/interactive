@@ -11,7 +11,7 @@ public class MermaidKernel : Kernel,
 {
     private ChooseMermaidKernelDirective? _chooseKernelDirective;
 
-    public MermaidKernel() : base("mermaid", languageName:"Mermaid")
+    public MermaidKernel() : base("mermaid", languageName:"Mermaid", displayName: "Mermaid")
     {
     }
 

@@ -32,7 +32,7 @@ public class KernelInfoCollectionTests
 
         collection.Add(new("one"));
 
-        collection.Invoking(c => c.Add(new("two", new[] { "one" })))
+        collection.Invoking(c => c.Add(new("two", null, new[] { "one" })))
                   .Should()
                   .Throw<ArgumentException>()
                   .Which
@@ -46,7 +46,7 @@ public class KernelInfoCollectionTests
     {
         var collection = new KernelInfoCollection();
 
-        var kernelInfo = new KernelInfo("a", new[] { "b" });
+        var kernelInfo = new KernelInfo("a", null, new[] { "b" });
 
         collection.Add(kernelInfo);
 
@@ -60,7 +60,7 @@ public class KernelInfoCollectionTests
     {
         var collection = new KernelInfoCollection();
 
-        var kernelInfo = new KernelInfo("a", new[] { "b" });
+        var kernelInfo = new KernelInfo("a", null, new[] { "b" });
 
         collection.Add(kernelInfo);
 

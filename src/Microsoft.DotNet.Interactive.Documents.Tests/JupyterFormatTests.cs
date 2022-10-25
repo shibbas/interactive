@@ -133,7 +133,7 @@ public class JupyterFormatTests : DocumentFormatTestsBase
     }
 
     [Fact]
-    public void cell_metadata_can_specify_language_that_overrides_notebook()
+    public void cell_dotnet_metadata_can_specify_language_that_overrides_notebook()
     {
         var jupyter = new
         {
@@ -148,6 +148,57 @@ public class JupyterFormatTests : DocumentFormatTestsBase
                         dotnet_interactive = new
                         {
                             language = "fsharp"
+                        }
+                    },
+                    source = new[] { "// this should be F#" }
+                }
+            },
+            metadata = new
+            {
+                kernelspec = new
+                {
+                    display_name = ".NET (C#)",
+                    language = "C#",
+                    name = ".net-csharp"
+                },
+                language_info = new
+                {
+                    file_extension = ".cs",
+                    mimetype = "text/x-csharp",
+                    name = "C#",
+                    pygments_lexer = "C#",
+                    version = "8.0"
+                }
+            },
+            nbformat = 4,
+            nbformat_minor = 4
+        };
+        var notebook = SerializeAndParse(jupyter);
+        notebook.Elements
+                .Should()
+                .ContainSingle()
+                .Which
+                .KernelName
+                .Should()
+                .Be("fsharp");
+    }
+
+    [Fact]
+    public void cell_polyglot_metadata_can_specify_kernel_name_that_overrides_notebook()
+    {
+        var jupyter = new
+        {
+            cells = new object[]
+            {
+                new
+                {
+                    cell_type = "code",
+                    execution_count = 1,
+                    metadata = new
+                    {
+                        polyglot_notebook = new
+                        {
+                            kernelName = "fsharp"
                         }
                     },
                     source = new[] { "// this should be F#" }
@@ -199,6 +250,42 @@ public class JupyterFormatTests : DocumentFormatTestsBase
                         dotnet_interactive = new
                         {
                             language = "fsharp"
+                        }
+                    },
+                    source = new[] { "// this should be F#" }
+                }
+            }
+        };
+        var notebook = SerializeAndParse(jupyter);
+        notebook.Elements
+                .Should()
+                .ContainSingle()
+                .Which
+                .KernelName
+                .Should()
+                .Be("fsharp");
+    }
+
+    [Fact]
+    public void cell_polyglot_kernel_name_overrides_dotnet_metadata_language()
+    {
+        var jupyter = new
+        {
+            cells = new object[]
+            {
+                new
+                {
+                    cell_type = "code",
+                    execution_count = 1,
+                    metadata = new
+                    {
+                        dotnet_interactive = new
+                        {
+                            language = "not-fsharp"
+                        },
+                        polyglot_notebook = new
+                        {
+                            kernelName = "fsharp"
                         }
                     },
                     source = new[] { "// this should be F#" }
@@ -629,7 +716,7 @@ public class JupyterFormatTests : DocumentFormatTestsBase
     }
 
     [Fact]
-    public void cell_with_metadata_but_not_language_can_be_parsed()
+    public void cell_with_dotnet_metadata_but_not_language_can_be_parsed()
     {
         var jupyter = new
         {
@@ -666,6 +753,50 @@ public class JupyterFormatTests : DocumentFormatTestsBase
                             ["dotnet_interactive"] = new Dictionary<string, object>
                             {
                                 ["not_a_language"] = "fsharp"
+                            }
+                        }
+                    }
+                });
+    }
+
+    [Fact]
+    public void cell_with_polyglot_metadata_but_not_kernel_name_can_be_parsed()
+    {
+        var jupyter = new
+        {
+            cells = new object[]
+            {
+                new
+                {
+                    cell_type = "code",
+                    source = new[]
+                    {
+                        "// this is not really fsharp"
+                    },
+                    metadata = new
+                    {
+                        polyglot_notebook = new
+                        {
+                            not_a_kernel = "fsharp"
+                        }
+                    }
+                }
+            }
+        };
+
+        var notebook = SerializeAndParse(jupyter);
+
+        notebook.Elements
+                .Should()
+                .BeEquivalentToRespectingRuntimeTypes(new[]
+                {
+                    new InteractiveDocumentElement("// this is not really fsharp", "csharp")
+                    {
+                        Metadata = new Dictionary<string, object>
+                        {
+                            ["polyglot_notebook"] = new Dictionary<string, object>
+                            {
+                                ["not_a_kernel"] = "fsharp"
                             }
                         }
                     }
@@ -994,6 +1125,14 @@ public class JupyterFormatTests : DocumentFormatTestsBase
                     {
                         new { name = "csharp" }
                     }
+                },
+                polyglot_notebook = new
+                {
+                    defaultKernelName = "csharp",
+                    items = new object[]
+                    {
+                        new { name = "csharp" }
+                    }
                 }
             })));
         jupyter["nbformat"]
@@ -1031,6 +1170,10 @@ public class JupyterFormatTests : DocumentFormatTestsBase
                                                      dotnet_interactive = new
                                                      {
                                                          language = "csharp"
+                                                     },
+                                                     polyglot_notebook = new
+                                                     {
+                                                         kernelName = "csharp"
                                                      }
                                                  },
                                                  outputs = Array.Empty<object>(),
@@ -1081,6 +1224,10 @@ public class JupyterFormatTests : DocumentFormatTestsBase
                     dotnet_interactive = new
                     {
                         language = "fsharp"
+                    },
+                    polyglot_notebook = new
+                    {
+                        kernelName = "fsharp"
                     }
                 },
                 source = new[]

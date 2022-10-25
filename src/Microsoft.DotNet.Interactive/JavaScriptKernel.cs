@@ -18,8 +18,9 @@ public class JavaScriptKernel :
 {
     private readonly KernelClientBase _client;
     public const string DefaultKernelName = "javascript";
+    private const string LanguageName = "javascript";
 
-    public JavaScriptKernel(KernelClientBase client = null) : base(DefaultKernelName)
+    public JavaScriptKernel(KernelClientBase client = null) : base(DefaultKernelName, languageName: LanguageName)
     {
         _client = client;
     }

@@ -129,6 +129,8 @@ export function tryAddUriToRoutingSlip(kernelCommandOrEventEnvelope: KernelComma
     return canAdd;
 }
 
+export const onKernelInfoUpdates: ((compositeKernel: CompositeKernel) => void)[] = [];
+
 export function ensureOrUpdateProxyForKernelInfo(kernelInfoProduced: contracts.KernelInfoProduced, compositeKernel: CompositeKernel) {
     const uriToLookup = kernelInfoProduced.kernelInfo.remoteUri ?? kernelInfoProduced.kernelInfo.uri;
     if (uriToLookup) {
@@ -149,6 +151,10 @@ export function ensureOrUpdateProxyForKernelInfo(kernelInfoProduced: contracts.K
             // patch
             updateKernelInfo(kernel.kernelInfo, kernelInfoProduced.kernelInfo);
         }
+
+        for (const updater of onKernelInfoUpdates) {
+            updater(compositeKernel);
+        }
     }
 }
 
@@ -161,6 +167,7 @@ export function isKernelInfoForProxy(kernelInfo: contracts.KernelInfo): boolean 
 export function updateKernelInfo(destination: contracts.KernelInfo, incoming: contracts.KernelInfo) {
     destination.languageName = incoming.languageName ?? destination.languageName;
     destination.languageVersion = incoming.languageVersion ?? destination.languageVersion;
+    destination.displayName = incoming.displayName;
 
     const supportedDirectives = new Set<string>();
     const supportedCommands = new Set<string>();

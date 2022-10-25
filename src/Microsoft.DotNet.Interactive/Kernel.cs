@@ -50,7 +50,8 @@ namespace Microsoft.DotNet.Interactive
         protected Kernel(
             string name,
             string languageName = null,
-            string languageVersion = null)
+            string languageVersion = null,
+            string displayName = null)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -74,16 +75,16 @@ namespace Microsoft.DotNet.Interactive
                         GetType(),
                         GetImplementedCommandHandlerTypesFor));
 
-            _kernelInfo = InitializeKernelInfo(name, languageName, languageVersion);
+            _kernelInfo = InitializeKernelInfo(name, languageName, languageVersion, displayName);
         }
 
-        private KernelInfo InitializeKernelInfo(string name, string languageName, string languageVersion)
+        private KernelInfo InitializeKernelInfo(string name, string languageName, string languageVersion, string displayName)
         {
             var supportedKernelCommands = _supportedCommandTypes.Select(t => new KernelCommandInfo(t.Name)).ToArray();
 
             var supportedDirectives = Directives.Select(d => new KernelDirectiveInfo(d.Name)).ToArray();
 
-            return new KernelInfo(name, languageName, languageVersion)
+            return new KernelInfo(name, languageName, languageVersion, displayName)
             {
                 SupportedKernelCommands = supportedKernelCommands,
                 SupportedDirectives = supportedDirectives,
@@ -155,7 +156,7 @@ namespace Microsoft.DotNet.Interactive
                 }
 
                 if (command.DestinationUri is { } &&
-                    handlingKernel.KernelInfo.Uri is { } && 
+                    handlingKernel.KernelInfo.Uri is { } &&
                     command.DestinationUri == handlingKernel.KernelInfo.Uri)
                 {
                     command.SchedulingScope = handlingKernel.SchedulingScope;
@@ -536,7 +537,7 @@ namespace Microsoft.DotNet.Interactive
                             }
 
                             return inner.IsChildCommand(outer);
-                          
+
                         });
                     RegisterForDisposal(scheduler);
                     SetScheduler(scheduler);

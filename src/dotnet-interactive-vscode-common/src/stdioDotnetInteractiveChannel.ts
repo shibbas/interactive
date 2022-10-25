@@ -112,6 +112,7 @@ export class StdioDotnetInteractiveChannel implements DotnetInteractiveChannel {
             const garbage = parse(line);
         }
         catch (e) {
+            //Logger.default.info(`Unable to parse JSON object: ${e}: ${line}`);
             const x = e;
         }
         const envelope = parse(line);

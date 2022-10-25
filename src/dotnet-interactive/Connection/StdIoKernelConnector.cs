@@ -114,6 +114,7 @@ public class StdIoKernelConnector : IKernelConnector, IDisposable
                 new Uri(_remoteHostUri, kernelName));
 
             proxyKernel.RegisterForDisposal(_refCountDisposable);
+            proxyKernel.UseValueSharing();
 
             while (!kernelReadyReceived)
             {

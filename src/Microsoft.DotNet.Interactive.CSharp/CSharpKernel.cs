@@ -64,7 +64,7 @@ namespace Microsoft.DotNet.Interactive.CSharp
         {
 
         }
-        public CSharpKernel(string name) : base(name, "C#", "10.0")
+        public CSharpKernel(string name) : base(name, languageName: "C#", languageVersion: "10.0", displayName: "C# Script")
         {
             _workspace = new InteractiveWorkspace();
 

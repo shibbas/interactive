@@ -18,21 +18,6 @@ namespace Microsoft.DotNet.Interactive.Jupyter.ZMQ;
 
 internal class JupyterConnection : IJupyterConnection
 {
-    private static JupyterConnection _localJupyterConnection;
-
-    public static JupyterConnection Local
-    {
-        get
-        {
-            if (_localJupyterConnection == null)
-            {
-                _localJupyterConnection = new(new JupyterKernelSpecModule());
-            }
-
-            return _localJupyterConnection;
-        }
-    }
-
     private readonly Task<IReadOnlyDictionary<string, KernelSpec>> _getKernelSpecs;
 
     public JupyterConnection(IJupyterKernelSpecModule kernelSpecModule)
@@ -111,7 +96,7 @@ internal class JupyterConnection : IJupyterConnection
             throw new KernelStartException(kernelSpecName, $"Process Exited with exit code {kernelProcess.ExitCode}. Ensure you are running in the correct environment.");
         }
 
-        var kernelConnection = new ZMQKernelConnection(connectionInfo, kernelProcess);
+        var kernelConnection = new ZMQKernelConnection(connectionInfo, kernelProcess, kernelSpecName);
         return kernelConnection;
     }
 
